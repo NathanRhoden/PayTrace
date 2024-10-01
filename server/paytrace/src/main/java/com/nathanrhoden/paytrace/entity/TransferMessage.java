@@ -1,9 +1,7 @@
 package com.nathanrhoden.paytrace.entity;
 
-import com.nathanrhoden.paytrace.helpers.NumberGenerator;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -33,6 +31,7 @@ public class TransferMessage {
     private String remittanceInformation;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 }
