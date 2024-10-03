@@ -1,10 +1,8 @@
 package com.nathanrhoden.paytrace.entity;
 
-import com.nathanrhoden.paytrace.DTO.TransferMessageDTO;
-import com.nathanrhoden.paytrace.helpers.NumberGenerator;
+
 import jakarta.persistence.*;
 import lombok.*;
-import org.modelmapper.ModelMapper;
 
 import java.util.Date;
 
@@ -26,6 +24,8 @@ public class TransferMessage {
     private Date valueDate;
     private String currency;
     private String ordBIC;
+    private String beneBIC;
+    private String beneficiaryCustomerAccountNumber;
     private String interbankSettledAmount;
     private String instructedAmount;
     private String orderingCustomerName;

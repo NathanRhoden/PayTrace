@@ -7,13 +7,15 @@ import com.nathanrhoden.paytrace.repository.TransferMessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class TransferMessageService {
 
 
-    private TransferMessageRepo transferMessageRepo;
+    private final TransferMessageRepo transferMessageRepo;
 
     @Autowired
     public TransferMessageService(TransferMessageRepo transferMessageRepo) {
@@ -39,6 +41,9 @@ public class TransferMessageService {
                 ))
                 .currency(transferMessage.getCurrency())
                 .operationCode("CRED")
+                .valueDate(Date.from(Instant.now()))
+                .uniqueTransactionRef(transferMessage.getUniqueTransactionRef())
+                .userBlockHeader("OPENBANKING")
                 .ordBIC(transferMessage.getOrdBIC())
                 .interbankSettledAmount(transferMessage.getInterbankSettledAmount())
                 .instructedAmount(transferMessage.getInstructedAmount())
@@ -46,8 +51,9 @@ public class TransferMessageService {
                 .orderingCustomerAccountNumber(transferMessage.getOrderingCustomerAccountNumber())
                 .orderingCustomerName(transferMessage.getOrderingCustomerName())
                 .remittanceInformation(transferMessage.getRemittanceInformation())
+                .beneBIC(transferMessage.getBeneBIC())
+                .beneficiaryCustomerAccountNumber(transferMessage.getBeneficiaryCustomerAccountNumber())
                 .build();
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.nathanrhoden.paytrace.DTO;
+package com.nathanrhoden.paytrace.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class TransferMessageDTO {
     private String applicationHeader;
     private String userBlockHeader;
     private String uniqueTransactionRef;
-    private String operationCode ;
+    private String operationCode;
     private Date valueDate;
     private String currency;
     private String ordBIC;
@@ -28,6 +28,8 @@ public class TransferMessageDTO {
     private String orderingCustomerName;
     private String orderingCustomerAccountNumber;
     private String orderingCustomerAddress;
+    private String beneBIC;
+    private String beneficiaryCustomerAccountNumber;
     private String remittanceInformation;
 
 
