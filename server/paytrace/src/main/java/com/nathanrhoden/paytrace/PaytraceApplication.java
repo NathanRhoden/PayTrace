@@ -1,5 +1,6 @@
 package com.nathanrhoden.paytrace;
 
+import com.nathanrhoden.paytrace.entity.TransferMessage;
 import com.nathanrhoden.paytrace.repository.TransferMessageRepo;
 import com.nathanrhoden.paytrace.services.TransferMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,19 @@ public class PaytraceApplication {
         SpringApplication.run(PaytraceApplication.class, args);
     }
 
-    @Autowired
+    TransferMessageRepo transferMessageRepo;
     TransferMessageService transferMessageService;
 
+    @Autowired
+    public PaytraceApplication(TransferMessageRepo transferMessageRepo, TransferMessageService transferMessageService) {
+        this.transferMessageRepo = transferMessageRepo;
+        this.transferMessageService = transferMessageService;
+    }
 
     @Bean
     CommandLineRunner commandLineRunner() {
+
         return args -> {
-            var tm = transferMessageService.generateTransferMessage("MIDLGB22XXX");
-            System.out.println(tm.toString());
 
         };
     }

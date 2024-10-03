@@ -1,23 +1,20 @@
-package com.nathanrhoden.paytrace.entity;
+package com.nathanrhoden.paytrace.DTO;
 
-import com.nathanrhoden.paytrace.DTO.TransferMessageDTO;
-import com.nathanrhoden.paytrace.helpers.NumberGenerator;
-import jakarta.persistence.*;
-import lombok.*;
-import org.modelmapper.ModelMapper;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
 @Setter
-@ToString
-@Entity
-@Table(name = "TRANSFER_MESSAGE")
-public class TransferMessage {
+@AllArgsConstructor
+@NoArgsConstructor
+public class TransferMessageDTO {
 
+    private Long id;
     private String headerBlock;
     private String applicationHeader;
     private String userBlockHeader;
@@ -33,9 +30,5 @@ public class TransferMessage {
     private String orderingCustomerAddress;
     private String remittanceInformation;
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
 }
