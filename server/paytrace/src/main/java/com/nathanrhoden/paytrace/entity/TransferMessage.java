@@ -33,6 +33,9 @@ public class TransferMessage {
     private String orderingCustomerAddress;
     private String remittanceInformation;
 
+    @ManyToOne
+    @JoinColumn(name = "bank_id" , nullable = false)
+    private Bank bank;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
