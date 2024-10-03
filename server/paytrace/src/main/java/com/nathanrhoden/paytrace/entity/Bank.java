@@ -23,7 +23,7 @@ public class Bank {
 
     @Column(name = "bank_bic")
     private String bic;
-    private String bankname;
+    private String bankName;
     private String streetName;
     private String town;
     private String city;
