@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class TransferMessageController {
 
     private final TransferMessageService transferMessageService;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public TransferMessageController(TransferMessageService transferMessageService, ModelMapper modelMapper) {
@@ -35,7 +35,7 @@ public class TransferMessageController {
     public String saveMessage(@RequestBody TransferMessageDTO transferMessageDTO) {
 
         var tm = toEntity(transferMessageDTO);
-        transferMessageService.saveTransferMessage(tm);
+        transferMessageService.saveTransferMessage(tm, transferMessageDTO.getOrdBank(), transferMessageDTO.getBeneBank());
 
         return "saved";
 
@@ -47,9 +47,8 @@ public class TransferMessageController {
     }
 
     private TransferMessage toEntity(TransferMessageDTO transferMessageDTO) {
-        TransferMessage transferMessage = modelMapper.map(transferMessageDTO, TransferMessage.class);
+        return modelMapper.map(transferMessageDTO, TransferMessage.class);
 
-        return transferMessage;
     }
 
 

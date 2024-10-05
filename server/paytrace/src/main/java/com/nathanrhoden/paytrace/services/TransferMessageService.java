@@ -1,9 +1,13 @@
 package com.nathanrhoden.paytrace.services;
 
+import com.nathanrhoden.paytrace.entity.Bank;
 import com.nathanrhoden.paytrace.entity.TransferMessage;
+import com.nathanrhoden.paytrace.exceptions.BankNotFoundExpection;
 import com.nathanrhoden.paytrace.helpers.DateTimeUtil;
 import com.nathanrhoden.paytrace.helpers.NumberGenerator;
+import com.nathanrhoden.paytrace.repository.BankRepository;
 import com.nathanrhoden.paytrace.repository.TransferMessageRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +20,35 @@ public class TransferMessageService {
 
 
     private final TransferMessageRepo transferMessageRepo;
+    private final BankRepository bankRepository;
 
     @Autowired
-    public TransferMessageService(TransferMessageRepo transferMessageRepo) {
+    public TransferMessageService(TransferMessageRepo transferMessageRepo, BankRepository bankRepository) {
         this.transferMessageRepo = transferMessageRepo;
+        this.bankRepository = bankRepository;
     }
 
     public List<TransferMessage> getAllTransferMessages() {
         return transferMessageRepo.findAll();
     }
 
-    public void saveTransferMessage(TransferMessage transferMessage) {
-        transferMessageRepo.save(generateTransferMessage(transferMessage));
+    @Transactional
+    public void saveTransferMessage(TransferMessage transferMessage, Long ordBankId , Long beneBankId){
+        Bank sendingBank = bankRepository.findById(ordBankId)
+                .orElseThrow(() -> new BankNotFoundExpection("Bank not found"));
+
+        Bank receivingBank = bankRepository.findById(beneBankId)
+                .orElseThrow(() -> new BankNotFoundExpection("Bank not found"));
+        
+        /*
+
+        transferMessage.setBank(sendingBank);
+        transferMessage.setBank(receivingBank);
+
+
+         */
+
+        transferMessageRepo.save(transferMessage);
     }
 
     private TransferMessage generateTransferMessage(TransferMessage transferMessage) {

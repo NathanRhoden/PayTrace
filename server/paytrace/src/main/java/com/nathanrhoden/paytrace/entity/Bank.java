@@ -31,7 +31,8 @@ public class Bank {
     private String country;
 
     @OneToMany(mappedBy = "bank",
-    cascade = CascadeType.ALL
+    cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     private List<TransferMessage> transferMessageSet = new ArrayList<>();
 

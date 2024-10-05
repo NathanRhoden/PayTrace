@@ -14,7 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class TransferMessageDTO {
 
-    private Long id;
+    private Long ordBank;
+    private Long beneBank;
+
     private String headerBlock;
     private String applicationHeader;
     private String userBlockHeader;
