@@ -1,6 +1,5 @@
 package com.nathanrhoden.paytrace.services;
 
-import com.nathanrhoden.paytrace.entity.Bank;
 import com.nathanrhoden.paytrace.entity.TransferMessage;
 import com.nathanrhoden.paytrace.exceptions.BankNotFoundExpection;
 import com.nathanrhoden.paytrace.helpers.DateTimeUtil;
