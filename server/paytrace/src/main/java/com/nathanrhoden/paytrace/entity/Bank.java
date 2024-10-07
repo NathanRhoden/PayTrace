@@ -30,11 +30,7 @@ public class Bank {
     private String postcode;
     private String country;
 
-    @OneToMany(mappedBy = "bank",
-    cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<TransferMessage> transferMessageSet = new ArrayList<>();
+
 
     @Override
     public boolean equals(Object o) {

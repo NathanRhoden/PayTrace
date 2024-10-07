@@ -25,8 +25,8 @@ public class TransferMessageDTO {
     private Date valueDate;
     private String currency;
     private String ordBIC;
-    private String interbankSettledAmount;
-    private String instructedAmount;
+    private Long interbankSettledAmount;
+    private Long instructedAmount;
     private String orderingCustomerName;
     private String orderingCustomerAccountNumber;
     private String orderingCustomerAddress;

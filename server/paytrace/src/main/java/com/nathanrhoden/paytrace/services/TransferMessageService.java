@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,22 +34,17 @@ public class TransferMessageService {
     }
 
     @Transactional
-    public void saveTransferMessage(TransferMessage transferMessage, Long ordBankId , Long beneBankId){
-        Bank sendingBank = bankRepository.findById(ordBankId)
-                .orElseThrow(() -> new BankNotFoundExpection("Bank not found"));
+    public void saveTransferMessage(TransferMessage transferMessage, Long ordBankId, Long beneBankId) {
+        List<Long> ids = new ArrayList<>();
+        ids.add(ordBankId);
+        ids.add(beneBankId);
 
-        Bank receivingBank = bankRepository.findById(beneBankId)
-                .orElseThrow(() -> new BankNotFoundExpection("Bank not found"));
-        
-        /*
-
-        transferMessage.setBank(sendingBank);
-        transferMessage.setBank(receivingBank);
-
-
-         */
-
-        transferMessageRepo.save(transferMessage);
+        if(bankRepository.findAllById(ids).size() == 2){
+            transferMessageRepo.save(transferMessage);
+        }
+        else {
+            throw new BankNotFoundExpection("Bank not Found" , new Throwable("No Bank"));
+        }
     }
 
     private TransferMessage generateTransferMessage(TransferMessage transferMessage) {
