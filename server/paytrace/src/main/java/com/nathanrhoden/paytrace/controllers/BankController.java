@@ -20,11 +20,10 @@ public class BankController {
         return new ResponseEntity<>("saved" , HttpStatus.OK);
     }
 
-    /*
-    public ResponseEntity<String> findBankByBIC(@RequestParam String bic){
 
+    @GetMapping("/bic")
+    public ResponseEntity<Bank> findBankByBIC(@RequestParam String bic){
+        return new ResponseEntity<>(bankService.findBankByBic(bic) , HttpStatus.OK);
     }
-
-     */
 
 }
