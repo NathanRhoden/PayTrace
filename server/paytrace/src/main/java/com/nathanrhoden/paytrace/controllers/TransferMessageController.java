@@ -5,6 +5,8 @@ import com.nathanrhoden.paytrace.entity.TransferMessage;
 import com.nathanrhoden.paytrace.services.TransferMessageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 public class TransferMessageController {
 
     private final TransferMessageService transferMessageService;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public TransferMessageController(TransferMessageService transferMessageService, ModelMapper modelMapper) {
@@ -24,20 +26,22 @@ public class TransferMessageController {
     }
 
     @GetMapping("/all")
-    public List<TransferMessageDTO> getMessages() {
+    public ResponseEntity<List<TransferMessageDTO>> getMessages() {
         List<TransferMessage> transferMessages = transferMessageService.getAllTransferMessages();
-        return transferMessages.stream()
+        List<TransferMessageDTO> transfers =  transferMessages.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+
+        return new ResponseEntity<>(transfers , HttpStatus.OK);
     }
 
     @PostMapping("/save")
-    public String saveMessage(@RequestBody TransferMessageDTO transferMessageDTO) {
+    public ResponseEntity<String> saveMessage(@RequestBody TransferMessageDTO transferMessageDTO) {
 
         var tm = toEntity(transferMessageDTO);
-        transferMessageService.saveTransferMessage(tm);
+        transferMessageService.saveTransferMessage(tm, transferMessageDTO.getOrdBank(), transferMessageDTO.getBeneBank());
 
-        return "saved";
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
     }
 
@@ -47,9 +51,8 @@ public class TransferMessageController {
     }
 
     private TransferMessage toEntity(TransferMessageDTO transferMessageDTO) {
-        TransferMessage transferMessage = modelMapper.map(transferMessageDTO, TransferMessage.class);
+        return modelMapper.map(transferMessageDTO, TransferMessage.class);
 
-        return transferMessage;
     }
 
 

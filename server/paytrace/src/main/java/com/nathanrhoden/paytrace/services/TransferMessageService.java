@@ -1,13 +1,17 @@
 package com.nathanrhoden.paytrace.services;
 
 import com.nathanrhoden.paytrace.entity.TransferMessage;
+import com.nathanrhoden.paytrace.exceptions.BankNotFoundExpection;
 import com.nathanrhoden.paytrace.helpers.DateTimeUtil;
 import com.nathanrhoden.paytrace.helpers.NumberGenerator;
+import com.nathanrhoden.paytrace.repository.BankRepository;
 import com.nathanrhoden.paytrace.repository.TransferMessageRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,18 +20,30 @@ public class TransferMessageService {
 
 
     private final TransferMessageRepo transferMessageRepo;
+    private final BankRepository bankRepository;
 
     @Autowired
-    public TransferMessageService(TransferMessageRepo transferMessageRepo) {
+    public TransferMessageService(TransferMessageRepo transferMessageRepo, BankRepository bankRepository) {
         this.transferMessageRepo = transferMessageRepo;
+        this.bankRepository = bankRepository;
     }
 
     public List<TransferMessage> getAllTransferMessages() {
         return transferMessageRepo.findAll();
     }
 
-    public void saveTransferMessage(TransferMessage transferMessage) {
-        transferMessageRepo.save(generateTransferMessage(transferMessage));
+    @Transactional
+    public void saveTransferMessage(TransferMessage transferMessage, Long ordBankId, Long beneBankId) {
+        List<Long> ids = new ArrayList<>();
+        ids.add(ordBankId);
+        ids.add(beneBankId);
+
+        if(bankRepository.findAllById(ids).size() == 2){
+            transferMessageRepo.save(transferMessage);
+        }
+        else {
+            throw new BankNotFoundExpection("Bank not Found" , new Throwable("No Bank"));
+        }
     }
 
     private TransferMessage generateTransferMessage(TransferMessage transferMessage) {

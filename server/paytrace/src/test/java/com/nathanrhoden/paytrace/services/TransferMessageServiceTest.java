@@ -16,7 +16,7 @@ class TransferMessageServiceTest {
         TransferMessage transferMessage = new TransferMessage();
         transferMessage.setCurrency("GBP");
         transferMessage.setBeneBIC("TESTBICXXX");
-        transferMessage.setInstructedAmount("2500");
+        transferMessage.setInstructedAmount(2500L);
 
         TransferMessageDTO transferMessageDTO = modelMapper.map(transferMessage , TransferMessageDTO.class);
 

@@ -14,7 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class TransferMessageDTO {
 
-    private Long id;
+    private Long ordBank;
+    private Long beneBank;
+
     private String headerBlock;
     private String applicationHeader;
     private String userBlockHeader;
@@ -23,8 +25,8 @@ public class TransferMessageDTO {
     private Date valueDate;
     private String currency;
     private String ordBIC;
-    private String interbankSettledAmount;
-    private String instructedAmount;
+    private Long interbankSettledAmount;
+    private Long instructedAmount;
     private String orderingCustomerName;
     private String orderingCustomerAccountNumber;
     private String orderingCustomerAddress;
