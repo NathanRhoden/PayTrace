@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransferMessageRepo extends JpaRepository<TransferMessage , Long> {
+
     TransferMessage findByUniqueTransactionRef(String transferRef);
 }

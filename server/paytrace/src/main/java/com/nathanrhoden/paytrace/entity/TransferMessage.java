@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -40,6 +41,10 @@ public class TransferMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(fetch =FetchType.LAZY , mappedBy = "transferMessage", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Ticket> ticketList;
 
     @Override
     public boolean equals(Object o) {
