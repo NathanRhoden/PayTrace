@@ -1,6 +1,7 @@
 package com.nathanrhoden.paytrace.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,8 +43,8 @@ public class TransferMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @OneToMany(fetch =FetchType.LAZY , mappedBy = "transferMessage", cascade = CascadeType.ALL)
-    @ToString.Exclude
     private List<Ticket> ticketList;
 
     @Override

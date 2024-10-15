@@ -1,5 +1,6 @@
 package com.nathanrhoden.paytrace.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,8 @@ public class Ticket {
     private Long receivingBankId;
     private String uniqueTransferReference;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @ManyToOne()
     @JoinColumn(name = "transfer_message_id")
     private TransferMessage transferMessage;
 

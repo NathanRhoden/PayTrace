@@ -1,4 +1,4 @@
-package com.nathanrhoden.paytrace.dto;
+package com.nathanrhoden.paytrace.dto.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

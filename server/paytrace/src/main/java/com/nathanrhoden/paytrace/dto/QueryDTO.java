@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketDTO {
+public class QueryDTO {
 
-    private String message;
-    private Long sendingBankId;
-    private Long receivingBankId;
-    private String uniqueTransferReference;
+    private TransferMessageDTO transferMessage;
+    private List<TicketDTO> ticketList;
 
 }
