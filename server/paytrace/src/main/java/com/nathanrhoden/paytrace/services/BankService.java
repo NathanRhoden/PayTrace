@@ -11,6 +11,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -49,6 +50,10 @@ public class BankService {
             throw new BankNotFoundExpection("BANK NOT FOUND ", new RuntimeException());
         }
         return b;
+    }
+
+    public Optional<Bank> findBankById(Long id){
+        return  bankRepository.findById(id);
     }
 
 }
