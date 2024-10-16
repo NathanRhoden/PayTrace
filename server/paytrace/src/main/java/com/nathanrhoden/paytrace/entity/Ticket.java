@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Data
@@ -26,6 +27,7 @@ public class Ticket {
     private Long sendingBankId;
     private Long receivingBankId;
     private String uniqueTransferReference;
+    private LocalDateTime dateTime;
 
     @JsonManagedReference
     @ManyToOne()

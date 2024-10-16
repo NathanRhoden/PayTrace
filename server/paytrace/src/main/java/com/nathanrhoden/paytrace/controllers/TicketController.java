@@ -41,6 +41,7 @@ public class TicketController {
                 .receivingBankId(ticketDto.getReceivingBankId())
                 .sendingBankId(ticketDto.getSendingBankId())
                 .uniqueTransferReference(ticketDto.getUniqueTransferReference())
+                .dateTime(ticketDto.getDateTime())
                 .transferMessage(transferMessage)
                 .build();
 
