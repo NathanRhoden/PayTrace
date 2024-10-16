@@ -1,10 +1,12 @@
 package com.nathanrhoden.paytrace.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor
@@ -40,6 +42,10 @@ public class TransferMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonBackReference
+    @OneToMany(fetch =FetchType.LAZY , mappedBy = "transferMessage", cascade = CascadeType.ALL)
+    private List<Ticket> ticketList;
 
     @Override
     public boolean equals(Object o) {
