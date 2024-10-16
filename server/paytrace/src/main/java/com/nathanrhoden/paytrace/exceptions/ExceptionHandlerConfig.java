@@ -27,4 +27,14 @@ public class ExceptionHandlerConfig {
         return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(TransferMessageNotFoundException.class)
+    public ResponseEntity<String> transferMessageNotFoundHandler(TransferMessageNotFoundException exception) {
+
+        System.err.println("Transfer message not Found" + exception.getMessage());
+
+        String responseMessage = "Error: The transfer message was not found";
+
+        return new ResponseEntity<>(responseMessage, HttpStatus.BAD_REQUEST);
+    }
+
 }

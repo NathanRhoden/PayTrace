@@ -2,6 +2,7 @@ package com.nathanrhoden.paytrace.services;
 
 import com.nathanrhoden.paytrace.dto.TicketDTO;
 import com.nathanrhoden.paytrace.entity.Ticket;
+import com.nathanrhoden.paytrace.exceptions.BankNotFoundExpection;
 import com.nathanrhoden.paytrace.repository.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,16 @@ public class TicketService {
 
     }
 
-    public List<Ticket> getAllTicketsByTransferMessage(String uniqueReference){
+    public List<Ticket> getAllTicketsByTransferMessage(String uniqueReference) {
 
         var transferMessage = transferMessageService.getTransferMessageById(uniqueReference);
 
-        return transferMessage.getTicketList();
+        if(transferMessage != null){
+            return transferMessage.getTicketList();
+        }
+        else{
+            throw new BankNotFoundExpection("Bank not found" , new RuntimeException());
+        }
 
     }
 }

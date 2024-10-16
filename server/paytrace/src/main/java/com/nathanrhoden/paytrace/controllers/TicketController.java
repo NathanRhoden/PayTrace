@@ -4,6 +4,7 @@ import com.nathanrhoden.paytrace.dto.QueryDTO;
 import com.nathanrhoden.paytrace.dto.TicketDTO;
 import com.nathanrhoden.paytrace.entity.Ticket;
 import com.nathanrhoden.paytrace.entity.TransferMessage;
+import com.nathanrhoden.paytrace.exceptions.TransferMessageNotFoundException;
 import com.nathanrhoden.paytrace.services.TicketService;
 import com.nathanrhoden.paytrace.services.TransferMessageService;
 import org.modelmapper.ModelMapper;
@@ -36,18 +37,22 @@ public class TicketController {
         TransferMessage transferMessage = transferMessageService.
                 getTransferMessageById(ticketDto.getUniqueTransferReference());
 
-        Ticket ticket = Ticket.builder()
-                .message(ticketDto.getMessage())
-                .receivingBankId(ticketDto.getReceivingBankId())
-                .sendingBankId(ticketDto.getSendingBankId())
-                .uniqueTransferReference(ticketDto.getUniqueTransferReference())
-                .dateTime(ticketDto.getDateTime())
-                .transferMessage(transferMessage)
-                .build();
+        if (transferMessage != null){
+            Ticket ticket = Ticket.builder()
+                    .message(ticketDto.getMessage())
+                    .receivingBankId(ticketDto.getReceivingBankId())
+                    .sendingBankId(ticketDto.getSendingBankId())
+                    .uniqueTransferReference(ticketDto.getUniqueTransferReference())
+                    .dateTime(ticketDto.getDateTime())
+                    .transferMessage(transferMessage)
+                    .build();
 
-        ticketService.saveTicket(ticket);
+            ticketService.saveTicket(ticket);
 
-        return new ResponseEntity<>("TICKET SAVED IN TESTING", HttpStatus.OK);
+            return new ResponseEntity<>("TICKET SAVED IN TESTING", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(new TransferMessageNotFoundException().getErrMsg(), HttpStatus.BAD_REQUEST);
 
     }
 
